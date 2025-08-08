@@ -1,5 +1,11 @@
 name: Deploy Next.js to GitHub Pages
 
+permissions:
+  id-token: write
+  contents: read
+  pages: write
+  deployments: write
+
 concurrency: 
   group: "pages-deploy"
   cancel-in-progress: true
@@ -30,11 +36,13 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Configure Pages
+        uses: actions/configure-pages@v4  # Ключевое добавление!
+
       - name: Create Deployment
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           target-dir: './docs'
 
   deploy:
@@ -46,8 +54,6 @@ jobs:
     
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           deployment_id: ${{ needs.build.outputs.deployment_id }}
