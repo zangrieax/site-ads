@@ -6,4 +6,4 @@ module.exports = {
   basePath: isProd ? '/site-ads' : '',
   assetPrefix: isProd ? '/site-ads/' : '',
   trailingSlash: true,
-};
+}
