@@ -1,0 +1,14 @@
+{
+  "name": "nextjs-gh-pages",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "export": "next export"
+  },
+  "dependencies": {
+    "next": "^15",
+    "react": "^19",
+    "react-dom": "^19"
+  }
+}
