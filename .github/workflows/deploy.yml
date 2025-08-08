@@ -1,25 +1,22 @@
 name: Deploy Next.js to GitHub Pages
 
 permissions:
-  id-token: write
   contents: read
   pages: write
-  deployments: write
+  id-token: write
 
-concurrency: 
-  group: "pages-deploy"
+concurrency:
+  group: "pages"
   cancel-in-progress: true
 
 on:
   push:
-    branches: [main]
+    branches: ["main"]
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
-    outputs:
-      deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,8 +24,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -36,24 +33,19 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v4  # Ключевое добавление!
-
-      - name: Create Deployment
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          target-dir: './docs'
+          path: "docs"  # Указываем папку со статическим сайтом
 
   deploy:
-    runs-on: ubuntu-latest
+    name: Deploy
     needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
     steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          deployment_id: ${{ needs.build.outputs.deployment_id }}
