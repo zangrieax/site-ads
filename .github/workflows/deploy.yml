@@ -61,7 +61,14 @@ jobs:
         run: |
           echo "=== Pre-deploy structure ==="
           tree -L 3 docs || ls -laR docs
-
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.GH_DEPLOY_TOKEN }}
+          branch: gh-pages
+          folder: docs
+          clean: true
+          single-commit: true
   deploy:
     runs-on: ubuntu-latest
     environment: github-pages
@@ -82,12 +89,5 @@ jobs:
           fi
         env:
           GH_DEPLOY_TOKEN: ${{ secrets.GH_DEPLOY_TOKEN }}
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          token: ${{ secrets.GH_DEPLOY_TOKEN }}
-          branch: gh-pages
-          folder: docs
-          clean: true
-          single-commit: true
+
 
