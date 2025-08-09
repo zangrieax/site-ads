@@ -26,6 +26,11 @@ jobs:
 
       - name: Build project
         run: npm run build
+      - name: Create .nojekyll
+        run: |
+          mkdir -p docs
+          touch docs/.nojekyll
+          echo "Created .nojekyll file"
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:

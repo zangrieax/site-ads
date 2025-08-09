@@ -8,13 +8,4 @@ module.exports = {
   images: {
     unoptimized: true,
   },
-  async generateBuildId() {
-    return "build-" + Date.now();
-  },
-  async exportPathMap(defaultPathMap) {
-    return {
-      ...defaultPathMap,
-      "./.nojekyll": { page: "" } // Добавляем .nojekyll
-    }
-  }
 }
