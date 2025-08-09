@@ -1,3 +1,16 @@
+name: Verify token
+  run: |
+    echo "Token length: ${#GH_DEPLOY_TOKEN}"
+    if [ -z "$GH_DEPLOY_TOKEN" ]; then 
+      echo "ERROR: Token is empty!"; 
+      exit 1;
+    else
+      echo "Token exists";
+    fi
+  env:
+    GH_DEPLOY_TOKEN: ${{ secrets.GH_DEPLOY_TOKEN }}
+
+
 name: Deploy Next.js to GitHub Pages
 
 on:
@@ -22,6 +35,17 @@ jobs:
 
       - name: Build project
         run: npm run build
+      - name: Verify token
+        run: |
+          echo "Token length: ${#GH_DEPLOY_TOKEN}"
+          if [ -z "$GH_DEPLOY_TOKEN" ]; then 
+            echo "ERROR: Token is empty!"; 
+            exit 1;
+          else
+            echo "Token exists";
+          fi
+        env:
+          GH_DEPLOY_TOKEN: ${{ secrets.GH_DEPLOY_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
