@@ -75,7 +75,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout
-          uses: actions/checkout@v3
+        uses: actions/checkout@v3
       - name: Verify token
         run: |
           echo "Token length: ${#GH_DEPLOY_TOKEN}"
