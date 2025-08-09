@@ -82,7 +82,7 @@ jobs:
         with:
           token: ${{ secrets.GH_DEPLOY_TOKEN }}
           branch: gh-pages
-          folder: docs/
+          folder: ../docs
           clean: true
           single-commit: true
 
