@@ -5,7 +5,7 @@ export default function Home() {
       <p>Статически экспортированный сайт</p>
       <div>
         <a href="https://nextjs.org/docs/advanced-features/static-html-export">
-          1Документация Next.js Export!
+          1Документация Next.js Export!2
         </a>
       </div>
     </main>
