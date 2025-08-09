@@ -8,4 +8,10 @@ module.exports = {
   images: {
     unoptimized: true,
   },
+  // Гарантируем копирование
+  async exportPathMap() {
+    return {
+      '/.nojekyll': { page: '/' }
+    }
+  }
 }
