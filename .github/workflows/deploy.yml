@@ -26,12 +26,10 @@ jobs:
 
       - name: Build project
         run: npm run build
-      - name: Ensure .nojekyll exists
+      - name: Create .nojekyll multiple ways
         run: |
-          if [ ! -f "docs/.nojekyll" ]; then
-            echo "⚠️ .nojekyll missing! Creating..."
-            touch docs/.nojekyll
-          fi
+          # Способ 1: Через echo
+          echo -n > docs/.nojekyll
       - name: Verify .nojekyll
         run: |
           echo "Checking for .nojekyll:"
