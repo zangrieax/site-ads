@@ -39,6 +39,7 @@ jobs:
       - name: Check permissions
         run: |
           touch docs/test_file
+          touch docs/.nojekyll
           chmod 644 docs/.nojekyll  # Явно выставляем права
           ls -la docs/.nojekyll
       - name: Upload build artifact
