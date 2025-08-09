@@ -57,6 +57,10 @@ jobs:
           name: build-output
           path: docs/
           retention-days: 1
+      - name: ls build
+        run: |
+          echo "=== Current directory structure ==="
+          ls -laR
 
   deploy:
     runs-on: ubuntu-latest
@@ -83,7 +87,7 @@ jobs:
         with:
           token: ${{ secrets.GH_DEPLOY_TOKEN }}
           branch: gh-pages
-          folder: ../docs
+          folder: docs
           clean: true
           single-commit: true
 
