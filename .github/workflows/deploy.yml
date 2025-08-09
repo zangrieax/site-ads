@@ -36,11 +36,16 @@ jobs:
           else
             echo "✅ .nojekyll present"
           fi
+      - name: Check permissions
+        run: |
+          touch docs/test_file
+          chmod 644 docs/.nojekyll  # Явно выставляем права
+          ls -la docs/.nojekyll
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: ./
+          path: docs/
           retention-days: 1
 
   deploy:
