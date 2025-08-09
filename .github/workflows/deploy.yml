@@ -10,6 +10,9 @@ permissions:
   contents: write
   pages: write
   id-token: write
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,16 +20,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-
       - name: Install dependencies
         run: npm ci
-
       - name: Build project
         run: npm run build
         working-directory: ./
@@ -63,6 +63,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: github-pages
+    url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     steps:
       - name: Checkout
@@ -94,8 +95,9 @@ jobs:
           publish_branch: gh-pages  # Кастомная ветка для публикации
           publish_dir: ./docs
           force_orphan: true
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v3
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
       - name: Activate GitHub Pages
         run: |
           curl -X POST \
