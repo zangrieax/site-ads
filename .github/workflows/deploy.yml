@@ -45,6 +45,11 @@ jobs:
           touch docs/.nojekyll
           chmod 644 docs/.nojekyll  # Явно выставляем права
           ls -la docs/.nojekyll
+      - name: Verify build
+        run: |
+          ls -la docs
+          [ -f docs/index.html ] || exit 1
+          chmod 644 docs/index.html  # Явно выставляем права
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
