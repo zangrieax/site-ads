@@ -92,6 +92,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_DEPLOY_TOKEN }}
-          publish_branch: production-site  # Кастомная ветка для публикации
+          publish_branch: gh-pages  # Кастомная ветка для публикации
           publish_dir: ./docs
           force_orphan: true
