@@ -65,7 +65,8 @@ jobs:
     steps:
       - name: ls build
         run: |
-          ls
+          echo "=== Current directory structure ==="
+          ls -laR
       - name: Verify token
         run: |
           echo "Token length: ${#GH_DEPLOY_TOKEN}"
