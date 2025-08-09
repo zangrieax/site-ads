@@ -10,9 +10,6 @@ permissions:
   contents: write
   pages: write
   id-token: write
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -94,6 +91,24 @@ jobs:
           publish_branch: gh-pages  # Кастомная ветка для публикации
           publish_dir: ./docs
           force_orphan: true
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v3
+      - name: Activate GitHub Pages
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GH_DEPLOY_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages" \
+            -d '{"source":{"branch":"gh-pages","path":"/"}}'
+      - name: Check Pages status
+        run: |
+          curl -s \
+            -H "Authorization: Bearer ${{ secrets.GH_DEPLOY_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages" | jq .
+      - name: Clear cache
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GH_DEPLOY_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages/builds"
