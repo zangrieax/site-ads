@@ -10,6 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,6 +29,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    environment: github-pages
     needs: build
     steps:
       - name: Verify token
