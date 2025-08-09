@@ -74,10 +74,6 @@ jobs:
     environment: github-pages
     needs: build
     steps:
-      - name: Pre-deploy verification
-        run: |
-          echo "=== Pre-deploy structure ==="
-          tree -L 3 docs || ls -laR docs
       - name: Verify token
         run: |
           echo "Token length: ${#GH_DEPLOY_TOKEN}"
