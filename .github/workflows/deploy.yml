@@ -85,5 +85,21 @@ jobs:
           fi
         env:
           GH_DEPLOY_TOKEN: ${{ secrets.GH_DEPLOY_TOKEN }}
-
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: docs  # Папка куда скачаются файлы
+      - name: Show directory structure
+        run: |
+          echo "=== Current directory structure ==="
+          ls -laR
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.GH_DEPLOY_TOKEN }}
+          branch: gh-pages
+          folder: docs
+          clean: true
+          single-commit: true
 
