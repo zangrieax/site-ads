@@ -63,6 +63,9 @@ jobs:
     environment: github-pages
     needs: build
     steps:
+      - name: ls build
+        run: |
+          ls
       - name: Verify token
         run: |
           echo "Token length: ${#GH_DEPLOY_TOKEN}"
@@ -79,7 +82,7 @@ jobs:
         with:
           token: ${{ secrets.GH_DEPLOY_TOKEN }}
           branch: gh-pages
-          folder: docs
+          folder: docs/
           clean: true
           single-commit: true
 
