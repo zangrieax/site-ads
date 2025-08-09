@@ -78,7 +78,7 @@ jobs:
         with:
           # Используем кастомный токен вместо системного
           github_token: ${{ secrets.GH_DEPLOY_TOKEN }}
-          publish_dir: ./docs
+          #publish_dir: ./docs
           publish_branch: static-site
           # Указываем явно репозиторий
           repository_name: zangrieax/site-ads
