@@ -76,13 +76,8 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          # Используем кастомный токен вместо системного
-          github_token: ${{ secrets.GH_DEPLOY_TOKEN }}
-          #publish_dir: ./docs
-          publish_branch: static-site
-          # Указываем явно репозиторий
-          repository_name: zangrieax/site-ads
-          # Очищаем историю коммитов
-          force_orphan: true
-          # Создаем пустой коммит если нужно
-          allow_empty_commit: true
+          token: ${{ secrets.GH_DEPLOY_TOKEN }}
+          branch: gh-pages
+          folder: docs
+          clean: true
+          single-commit: true
