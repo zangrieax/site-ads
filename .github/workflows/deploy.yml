@@ -23,9 +23,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Verify build output
-        run: ls -la docs
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -33,7 +30,12 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GH_DEPLOY_TOKEN }}  # Используем кастомный токен
+          # Используем кастомный токен вместо системного
+          github_token: ${{ secrets.GH_DEPLOY_TOKEN }}
           publish_dir: ./docs
-          full_commit_message: "Deploy: ${{ github.sha }}"
+          # Указываем явно репозиторий
+          repository_name: zangrieax/site-ads
+          # Очищаем историю коммитов
           force_orphan: true
+          # Создаем пустой коммит если нужно
+          allow_empty_commit: true
