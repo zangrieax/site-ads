@@ -57,20 +57,20 @@ jobs:
           name: build-output
           path: docs/
           retention-days: 1
-      - name: ls build
+      - name: Pre-deploy verification
         run: |
-          echo "=== Current directory structure ==="
-          ls -laR
+          echo "=== Pre-deploy structure ==="
+          tree -L 3 docs || ls -laR docs
 
   deploy:
     runs-on: ubuntu-latest
     environment: github-pages
     needs: build
     steps:
-      - name: ls build
+      - name: Pre-deploy verification
         run: |
-          echo "=== Current directory structure ==="
-          ls -laR
+          echo "=== Pre-deploy structure ==="
+          tree -L 3 docs || ls -laR docs
       - name: Verify token
         run: |
           echo "Token length: ${#GH_DEPLOY_TOKEN}"
