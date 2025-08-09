@@ -26,11 +26,12 @@ jobs:
 
       - name: Build project
         run: npm run build
-      - name: Create .nojekyll
+      - name: Ensure .nojekyll exists
         run: |
-          mkdir -p docs
-          touch docs/.nojekyll
-          echo "Created .nojekyll file"
+          if [ ! -f "docs/.nojekyll" ]; then
+            echo "⚠️ .nojekyll missing! Creating..."
+            touch docs/.nojekyll
+          fi
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
