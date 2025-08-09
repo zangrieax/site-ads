@@ -98,3 +98,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Activate GitHub Pages
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GH_DEPLOY_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages" \
+            -d '{"source":{"branch":"gh-pages","path":"/"}}'
