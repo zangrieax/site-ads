@@ -95,9 +95,8 @@ jobs:
           publish_branch: gh-pages  # Кастомная ветка для публикации
           publish_dir: ./docs
           force_orphan: true
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v3
       - name: Activate GitHub Pages
         run: |
           curl -X POST \
