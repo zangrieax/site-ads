@@ -32,6 +32,16 @@ jobs:
             echo "⚠️ .nojekyll missing! Creating..."
             touch docs/.nojekyll
           fi
+      - name: Verify .nojekyll
+        run: |
+          echo "Checking for .nojekyll:"
+          ls -la docs/.nojekyll
+          if [ ! -f "docs/.nojekyll" ]; then
+            echo "❌ CRITICAL: .nojekyll file is missing!"
+            exit 1
+          else
+            echo "✅ .nojekyll present"
+          fi
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
