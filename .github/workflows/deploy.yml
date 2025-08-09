@@ -30,6 +30,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Verify token
+        run: |
+          echo "Token length: ${#GH_DEPLOY_TOKEN}"
+          if [ -z "$GH_DEPLOY_TOKEN" ]; then 
+            echo "ERROR: Token is empty!"; 
+            exit 1;
+          else
+            echo "Token exists";
+          fi
+        env:
+          GH_DEPLOY_TOKEN: ${{ secrets.GH_DEPLOY_TOKEN }}
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
